@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:29:12 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/01/29 18:30:04 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:31:13 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	deadcheck(t_philo *me)
 		return (1);
 	if (usecsince(me->lastmeal) > table->ttd)
 	{
-		printf("%5li %3li is dead \n", usecsince(table->start) / 1000, me->id);
-		table->deadphilo = me->tid;
+		table->deadphilo = me->id+1;
 		return (1);
 	}
 	else
@@ -52,4 +51,12 @@ int	mutex_lock_timed(pthread_mutex_t *mutex, t_philo *me)
 	}
 	else
 		return (0);
+}
+
+long	min(long a, long b)
+{
+	if (a > b)
+		return (b);
+	else
+		return (a);
 }

@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:30 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/01/29 18:30:49 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:54:55 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ typedef struct s_philo
 	struct timeval	lastmeal;
 }	t_philo;
 
+
 long	usecsince(struct timeval ref);
 int		deadcheck(t_philo *me);
 int		mutex_lock_timed(pthread_mutex_t *mutex, t_philo *me);
+long	min(long a, long b);
 
 #endif
