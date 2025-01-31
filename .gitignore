@@ -1,2 +1,4 @@
 philo
 *.o
+valgrind.log
+log

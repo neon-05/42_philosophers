@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:29:12 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/01/30 18:31:13 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:55:00 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	deadcheck(t_philo *me)
 		return (1);
 	if (usecsince(me->lastmeal) > table->ttd)
 	{
-		table->deadphilo = me->id+1;
+		table->deadphilo = me->id + 1;
 		return (1);
 	}
 	else
@@ -56,6 +56,14 @@ int	mutex_lock_timed(pthread_mutex_t *mutex, t_philo *me)
 long	min(long a, long b)
 {
 	if (a > b)
+		return (b);
+	else
+		return (a);
+}
+
+int	max(int a, int b)
+{
+	if (a < b)
 		return (b);
 	else
 		return (a);
