@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:30 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/01/31 16:54:46 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:18:10 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_table
 	long			tte;
 	long			tts;
 	int				max_meals;
-	pthread_t		deadphilo;
+	size_t			deadphilo;
 	struct timeval	start;
 }	t_table;
 
@@ -54,6 +54,6 @@ int		ft_atoi(const char *s);
 int		p_eat(t_philo *me);
 int		p_sleep(t_philo *me);
 int		p_think(t_philo *me);
-void	*philo(void *p);
+void	*lifeofaphilo(void *p);
 
 #endif

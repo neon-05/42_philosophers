@@ -2,3 +2,4 @@ philo
 *.o
 valgrind.log
 log
+.vscode

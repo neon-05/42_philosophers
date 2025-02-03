@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:57:59 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/01/31 16:54:27 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:03:28 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ int	alloc(t_philo **philos, t_table **table, size_t n)
 	*table = malloc(sizeof(t_table));
 	if (!table)
 		return (1);
-	*philos = malloc(sizeof(t_philo) * n);
-	if (!table)
-	{
-		free(*table);
-		return (1);
-	}
 	(*table)->forks = malloc(sizeof(pthread_mutex_t) * n);
 	if (!(*table)->forks)
 	{
 		free(*table);
-		free(*philos);
+		return (1);
+	}
+	*philos = malloc(sizeof(t_philo) * n);
+	if (!(*philos))
+	{
+		free((*table)->forks);
+		free(*table);
 		return (1);
 	}
 	return (0);
@@ -76,6 +76,7 @@ int	readinput(int argc, const char *argv[], t_philo **philos, t_table **table)
 	(*table)->ttd = max(0, ft_atoi(argv[2])) * 1000;
 	(*table)->tte = max(0, ft_atoi(argv[3])) * 1000;
 	(*table)->tts = max(0, ft_atoi(argv[4])) * 1000;
+	(*table)->max_meals = -1;
 	if (argc == 6)
 		(*table)->max_meals = max(-1, ft_atoi(argv[5]));
 	return (0);

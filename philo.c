@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:21:57 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/01/31 16:55:56 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:55:24 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	philo_start(t_philo *philos, t_table *table)
 	{
 		philos[i].id = i;
 		philos[i].table = table;
-		pthread_create(&(philos[i].tid), NULL, &philo, &(philos[i]));
+		pthread_create(&(philos[i].tid), NULL, &lifeofaphilo, &(philos[i]));
 		i++;
 	}
 	while (i > 0)
