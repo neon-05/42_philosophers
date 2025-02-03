@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:27:29 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/03 15:12:49 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:28:02 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	p_think(t_philo *me)
 
 	table = me->table;
 	if (deadcheck(me))
-	return (1);
+		return (1);
 	printf("%6li %3li is thinking\n",
 		usecsince(table->start) / 1000, me->id);
 	if (mutex_lock_timed(&(table->forks[me->id]), me))
