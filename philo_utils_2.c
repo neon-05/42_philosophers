@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:27:29 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/03 15:28:02 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:53:30 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ void	*lifeofaphilo(void *p)
 	me = p;
 	i = 0;
 	gettimeofday(&me->lastmeal, NULL);
+
+	if (me->table->nphilos == 1)
+	{
+		usleep(me->table->ttd);
+		deadcheck(me);
+		return (NULL);
+	}
 	while (i != me->table->max_meals)
 	{
 		if (p_think(me) || p_eat(me) || p_sleep(me))
