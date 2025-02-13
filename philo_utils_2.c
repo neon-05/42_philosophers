@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:27:29 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/07 15:00:43 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:12:45 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ int	p_think(t_philo *me)
 		return (1);
 	printf("%6li %3li is thinking\n",
 		usecsince(table->start) / 1000, me->id);
-	if (mutex_lock_timed(&(table->forks[me->id]), me))
+	if (mutex_lock_timed(&(table->forks[me->id - 1]), me))
 		return (1);
-	if (mutex_lock_timed(&(table->forks[(me->id + 1) % table->nphilos]), me))
+	printf("%6li %3li has taken a fork\n",
+		usecsince(table->start) / 1000, me->id);
+	if (mutex_lock_timed(&(table->forks[me->id % table->nphilos]), me))
 	{
-		pthread_mutex_unlock(&(table->forks[me->id]));
+		pthread_mutex_unlock(&(table->forks[me->id - 1]));
 		return (1);
 	}
+	printf("%6li %3li has taken a fork\n",
+		usecsince(table->start) / 1000, me->id);
 	return (0);
 }
 
@@ -43,10 +47,10 @@ int	p_eat(t_philo *me)
 		printf("%6li %3li is eating\n",
 			usecsince(table->start) / 1000, me->id);
 		gettimeofday(&me->lastmeal, NULL);
-		usleep(min(table->tte, table->ttd));
+		usleep(table->tte);
 	}
-	pthread_mutex_unlock(&(table->forks[me->id]));
-	pthread_mutex_unlock(&(table->forks[(me->id + 1) % table->nphilos]));
+	pthread_mutex_unlock(&(table->forks[me->id - 1]));
+	pthread_mutex_unlock(&(table->forks[me->id % table->nphilos]));
 	return (status);
 }
 
@@ -59,7 +63,7 @@ int	p_sleep(t_philo *me)
 	{
 		printf("%6li %3li is sleeping\n",
 			usecsince(table->start) / 1000, me->id);
-		usleep(min(table->tts, table->ttd - table->tte));
+		usleep(table->tts);
 		return (0);
 	}
 	return (1);
@@ -73,7 +77,6 @@ void	*lifeofaphilo(void *p)
 	me = p;
 	i = 0;
 	gettimeofday(&me->lastmeal, NULL);
-
 	if (me->table->nphilos == 1)
 	{
 		usleep(me->table->ttd);

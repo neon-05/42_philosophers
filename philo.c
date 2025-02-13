@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:21:57 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/03 14:55:24 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:47:23 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	philo_start(t_philo *philos, t_table *table)
 	gettimeofday(&(table->start), NULL);
 	while (i < table->nphilos)
 	{
-		philos[i].id = i;
+		philos[i].id = i + 1;
 		philos[i].table = table;
 		pthread_create(&(philos[i].tid), NULL, &lifeofaphilo, &(philos[i]));
+		i++;
 		i++;
 	}
 	while (i > 0)

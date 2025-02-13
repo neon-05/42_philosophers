@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:29:12 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/03 15:12:58 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:45:26 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	deadcheck(t_philo *me)
 		return (1);
 	if (usecsince(me->lastmeal) > table->ttd)
 	{
-		table->deadphilo = me->id + 1;
+		table->deadphilo = me->id;
 		return (1);
 	}
 	else
