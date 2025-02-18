@@ -3,3 +3,4 @@ philo
 valgrind.log
 log
 .vscode
+out
