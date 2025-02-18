@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:30 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/07 15:00:56 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:50:07 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 
 typedef struct s_table
 {
-	size_t			nphilos;
+	size_t			n_philo;
+	size_t			running_philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	start_lock;
 	long			ttd;
 	long			tte;
 	long			tts;

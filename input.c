@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:57:59 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/03 15:03:28 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:51:17 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	readinput(int argc, const char *argv[], t_philo **philos, t_table **table)
 	n_philo = ft_atoi(argv[1]);
 	if (alloc(philos, table, n_philo))
 		return (1);
-	(*table)->nphilos = n_philo;
+	(*table)->n_philo = n_philo;
+	(*table)->running_philos = 0;
 	(*table)->deadphilo = 0;
 	(*table)->ttd = max(0, ft_atoi(argv[2])) * 1000;
 	(*table)->tte = max(0, ft_atoi(argv[3])) * 1000;

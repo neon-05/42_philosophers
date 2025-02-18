@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:27:29 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/13 16:12:45 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:22:02 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	p_think(t_philo *me)
 		return (1);
 	printf("%6li %3li has taken a fork\n",
 		usecsince(table->start) / 1000, me->id);
-	if (mutex_lock_timed(&(table->forks[me->id % table->nphilos]), me))
+	if (mutex_lock_timed(&(table->forks[me->id % table->n_philo]), me))
 	{
 		pthread_mutex_unlock(&(table->forks[me->id - 1]));
 		return (1);
@@ -33,6 +33,11 @@ int	p_think(t_philo *me)
 	printf("%6li %3li has taken a fork\n",
 		usecsince(table->start) / 1000, me->id);
 	return (0);
+}
+
+void	p_lock_start(t_philo *me)
+{
+	p_think(me);
 }
 
 int	p_eat(t_philo *me)
@@ -50,7 +55,7 @@ int	p_eat(t_philo *me)
 		usleep(table->tte);
 	}
 	pthread_mutex_unlock(&(table->forks[me->id - 1]));
-	pthread_mutex_unlock(&(table->forks[me->id % table->nphilos]));
+	pthread_mutex_unlock(&(table->forks[me->id % table->n_philo]));
 	return (status);
 }
 
@@ -77,18 +82,21 @@ void	*lifeofaphilo(void *p)
 	me = p;
 	i = 0;
 	gettimeofday(&me->lastmeal, NULL);
-	if (me->table->nphilos == 1)
+	if (me->table->n_philo == 1)
 	{
 		usleep(me->table->ttd);
 		deadcheck(me);
 		return (NULL);
 	}
+	p_lock_start(me);
 	while (i != me->table->max_meals)
 	{
-		if (p_think(me) || p_eat(me) || p_sleep(me))
+		if (p_eat(me) || p_sleep(me))
 			break ;
 		if (me->table->max_meals > 0)
 			i++;
+		if (i != me->table->max_meals && p_think(me))
+			break ;
 	}
 	return (NULL);
 }
