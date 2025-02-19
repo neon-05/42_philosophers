@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:21:57 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/18 17:19:54 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:46:28 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	philo_start(t_philo *philos, t_table *table)
 	{
 		philos[i].id = i + 1;
 		philos[i].table = table;
-		pthread_mutex_lock(&(table->start_lock));
 		pthread_create(&(philos[i].tid), NULL, &lifeofaphilo, &(philos[i]));
-		pthread_mutex_unlock(&(table->start_lock));
+		usleep(10);
 		i++;
 	}
 	while (i > 0)
@@ -50,12 +49,12 @@ int	main(int argc, const char *argv[])
 	status = 1;
 	while (i < table->n_philo)
 		e |= pthread_mutex_init(&(table->forks[i++]), NULL);
-	e |= pthread_mutex_init(&(table->start_lock), NULL);
+	e |= pthread_mutex_init(&table->start_lock, NULL);
 	if (!e)
 		status = philo_start(philos, table);
 	while (i > 0)
 		pthread_mutex_destroy(&(table->forks[--i]));
-	pthread_mutex_destroy(&(table->start_lock));
+	pthread_mutex_destroy(&table->start_lock);
 	free(philos);
 	free(table->forks);
 	free(table);

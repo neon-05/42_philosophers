@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:57:59 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/18 15:51:17 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:48:38 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	alloc(t_philo **philos, t_table **table, size_t n)
 		return (1);
 	}
 	*philos = malloc(sizeof(t_philo) * n);
-	if (!(*philos))
+	if (!*philos)
 	{
 		free((*table)->forks);
 		free(*table);
