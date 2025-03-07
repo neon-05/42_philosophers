@@ -5,12 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 18:21:57 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/19 16:46:28 by ylabussi         ###   ########.fr       */
+/*   Created: 2025/02/21 15:51:27 by ylabussi          #+#    #+#             */
+/*   Updated: 2025/03/07 16:28:55 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	start_loop(t_philo *philos, t_table *table, size_t offset)
+{
+	size_t	i;
+
+	i = offset;
+	while (i < table->n_philo)
+	{
+		philos[i].id = i + 1;
+		philos[i].table = table;
+		if (pthread_create(&(philos[i].tid), NULL, &lifeofaphilo, &(philos[i])))
+		{
+			table->deadphilo = i + 1;
+			return (1);
+		}
+		i += 2;
+	}
+	return (0);
+}
 
 int	philo_start(t_philo *philos, t_table *table)
 {
@@ -18,19 +37,13 @@ int	philo_start(t_philo *philos, t_table *table)
 
 	i = 0;
 	gettimeofday(&(table->start), NULL);
+	if (start_loop(philos, table, 0))
+		return (3);
+	usleep(50);
+	if (start_loop(philos, table, 1))
+		return (3);
 	while (i < table->n_philo)
-	{
-		philos[i].id = i + 1;
-		philos[i].table = table;
-		pthread_create(&(philos[i].tid), NULL, &lifeofaphilo, &(philos[i]));
-		usleep(10);
-		i++;
-	}
-	while (i > 0)
-		pthread_join(philos[--i].tid, NULL);
-	if (table->deadphilo)
-		printf("%6li %3li died \n",
-			usecsince(table->start) / 1000, table->deadphilo);
+		pthread_join(philos[i++].tid, NULL);
 	return (table->deadphilo != 0);
 }
 
@@ -43,18 +56,18 @@ int	main(int argc, const char *argv[])
 	t_table	*table;
 
 	if (readinput(argc, argv, &philos, &table))
-		return (1);
+		return (2);
 	e = 0;
 	i = 0;
 	status = 1;
 	while (i < table->n_philo)
 		e |= pthread_mutex_init(&(table->forks[i++]), NULL);
-	e |= pthread_mutex_init(&table->start_lock, NULL);
+	e |= pthread_mutex_init(&table->deadphilo_lock, NULL);
 	if (!e)
 		status = philo_start(philos, table);
 	while (i > 0)
 		pthread_mutex_destroy(&(table->forks[--i]));
-	pthread_mutex_destroy(&table->start_lock);
+	pthread_mutex_destroy(&table->deadphilo_lock);
 	free(philos);
 	free(table->forks);
 	free(table);

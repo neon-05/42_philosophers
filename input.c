@@ -6,11 +6,19 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:57:59 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/19 15:48:38 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:20:21 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	max(int a, int b)
+{
+	if (a < b)
+		return (b);
+	else
+		return (a);
+}
 
 int	ft_atoi(const char *s)
 {
@@ -72,7 +80,6 @@ int	readinput(int argc, const char *argv[], t_philo **philos, t_table **table)
 	if (alloc(philos, table, n_philo))
 		return (1);
 	(*table)->n_philo = n_philo;
-	(*table)->running_philos = 0;
 	(*table)->deadphilo = 0;
 	(*table)->ttd = max(0, ft_atoi(argv[2])) * 1000;
 	(*table)->tte = max(0, ft_atoi(argv[3])) * 1000;

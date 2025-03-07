@@ -5,7 +5,7 @@ LFLAGS = -lpthread
 
 NAME = philo
 
-SRC = philo.c philo_utils.c philo_utils_2.c input.c
+SRC = input.c philo_cycle.c philo_utils.c philo.c
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)

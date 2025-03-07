@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:30 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/02/19 16:12:11 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:19:28 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@
 # include <sys/time.h>
 # include <string.h>
 
+typedef struct s_philo	t_philo;
+
 typedef struct s_table
 {
 	size_t			n_philo;
-	size_t			running_philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	start_lock;
 	long			ttd;
 	long			tte;
 	long			tts;
 	int				max_meals;
 	size_t			deadphilo;
+	pthread_mutex_t	deadphilo_lock;
 	struct timeval	start;
 }	t_table;
 
@@ -42,20 +43,17 @@ typedef struct s_philo
 	struct timeval	lastmeal;
 }	t_philo;
 
+int		p_eat(t_philo *me);
+int		p_sleep(t_philo *me);
+int		p_think(t_philo *me);
+void	*lifeofaphilo(void *p);
+
 long	usecsince(struct timeval ref);
 int		deadcheck(t_philo *me);
-int		mutex_lock_timed(pthread_mutex_t *mutex, t_philo *me);
+int		p_status(t_philo *me, char *s);
 long	min(long a, long b);
-int		max(int a, int b);
 
 int		readinput(int argc, const char *argv[],
 			t_philo **philos, t_table **table);
-int		alloc(t_philo **philos, t_table **table, size_t n);
-int		ft_atoi(const char *s);
-
-int		p_think(t_philo *me);
-int		p_eat(t_philo *me);
-int		p_sleep(t_philo *me);
-void	*lifeofaphilo(void *p);
 
 #endif
