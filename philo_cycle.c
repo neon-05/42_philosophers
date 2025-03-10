@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:52:23 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/03/07 16:27:50 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:10:08 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	*lifeofaphilo(void *p)
 		p_lonely_philo(me);
 		return (NULL);
 	}
+	if (!(me->id & 1))
+		usleep(500);
 	me->lastmeal = table->start;
 	while (i != table->max_meals)
 	{
